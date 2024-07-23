@@ -1,0 +1,55 @@
+// Display all the information about only one person using his ID.
+db.contactlist.findOne({
+	_id : ObjectId("669ff828b21c01e1dfcf2c17")
+});
+
+// Display all the contacts with an age >18.
+db.contactlist.find({
+	age : {
+		$gt : 18
+	}
+})
+
+// Display all the contacts with an age>18 and name containing "ah".
+db.contactlist.find({
+	age: { 
+		$gt: 18 
+	},
+	
+	$or : [
+		{ 
+			"Last name" : { 
+				$regex: /ah/,
+				$options: 'i' 
+			}
+		},
+		{
+			"First name" : { 
+				$regex: /ah/, 
+				$options: 'i' 
+			}
+		},
+	],
+});
+
+
+// Change the contact's first name from"Kefi Seif" to "Kefi Anis".
+db.contactlist.updateOne(
+    { 
+		name: "Kefi Seif"
+	},
+    { 
+		$set: { 
+			name: "Kefi Anis" 
+		}
+	}
+);
+
+// Delete the contacts that are aged under <5.
+db.contactlist.deleteMany({
+    age: { $lt: 5 }
+});
+
+
+// Display all of the contacts list.
+db.contactlist.find()
